@@ -1,7 +1,54 @@
-<script lang="ts"></script>
+<script lang="ts">
+  import { onMount } from "svelte";
+
+    let todos: Array<{text:String; completed: boolean}> = [];
+    let text = "";
+    onMount(()=>{
+        window.addEventListener('message', event => {
+        const message = event.data; 
+        console.log({message});
+        switch (message.type) {
+            case 'new-todo':
+                todos = [{text: message.value,completed:false},...todos];
+
+                break;
+        }
+    });
+    })
+</script>
 <style>
-    div{
-        color:blue;
+    .complete{
+        text-decoration: line-through;
     }
 </style>
-<div>Hiiii 123 </div>
+<form
+    on:submit|preventDefault = {()=>{
+        todos = [{text, completed:false}, ...todos];
+        text = '';
+    }}>
+    <input bind:value={text} />
+</form>
+<ul>
+    {#each todos as todo (todo.text)}
+        <li 
+        class={todo.completed ? 'complete':''}
+        on:click={()=>{
+            todo.completed = !todo.completed;
+        }}>{todo.text}</li>
+    {/each}
+</ul>
+
+<button on:click={()=>{
+    tsvscode.postMessage({
+        type:'onInfo',
+        value:'info message'
+    })
+}}> Click Me
+</button>
+<button on:click={()=>{
+    tsvscode.postMessage({
+        type:'onError',
+        value:'error message'
+    })
+}}> Click Me for error
+</button>

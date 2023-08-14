@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import { HelloWorldPanel } from './HelloWorldPanel';
 import { SidebarProvider } from './SidebarProvider';
+import { text } from 'stream/consumers';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -23,6 +24,26 @@ export  function activate(context: vscode.ExtensionContext) {
 			HelloWorldPanel.createOrShow(context.extensionUri);
 		})
 	);
+	context.subscriptions.push(
+		vscode.commands.registerCommand("vstodo.addTodo", () => {
+		  const { activeTextEditor } = vscode.window;
+	
+		  if (!activeTextEditor) {
+			vscode.window.showInformationMessage("No active text editor");
+			return;
+		  }
+	
+		  const text = activeTextEditor.document.getText(
+			activeTextEditor.selection
+		  );
+	
+		  sidebarProvider._view?.webview.postMessage({
+			type: "new-todo",
+			value: text,
+		  });
+		})
+	  );
+
 	const sidebarProvider = new SidebarProvider(context.extensionUri);
     context.subscriptions.push(
         vscode.window.registerWebviewViewProvider(

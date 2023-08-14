@@ -41,6 +41,11 @@
         "command": "todovs.refresh",
         "category": "TodoVS",
         "title": "Refresh"
+      },
+      {
+        "command": "todovs.addToDo",
+        "category": "TodoVS",
+        "title": "Add Todo from any selection"
       }
     ]
   },
