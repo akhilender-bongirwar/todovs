@@ -25,7 +25,7 @@ export  function activate(context: vscode.ExtensionContext) {
 		})
 	);
 	context.subscriptions.push(
-		vscode.commands.registerCommand("vstodo.addTodo", () => {
+		vscode.commands.registerCommand("todovs.addTodo", () => {
 		  const { activeTextEditor } = vscode.window;
 	
 		  if (!activeTextEditor) {

@@ -7,10 +7,13 @@
         window.addEventListener('message', event => {
         const message = event.data; 
         console.log({message});
+
         switch (message.type) {
             case 'new-todo':
-                todos = [{text: message.value,completed:false},...todos];
-
+                todos = [
+                {text: message.value, completed: false}, 
+                ...todos,
+            ];
                 break;
         }
     });
