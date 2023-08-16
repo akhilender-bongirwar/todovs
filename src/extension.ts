@@ -4,14 +4,16 @@ import * as vscode from 'vscode';
 import { HelloWorldPanel } from './HelloWorldPanel';
 import { SidebarProvider } from './SidebarProvider';
 import { text } from 'stream/consumers';
+import { authenticate } from './authenticate';
+import { TokenManager } from './TokenManager';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export  function activate(context: vscode.ExtensionContext) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "todovs" is now active!');
+	TokenManager.globalState = context.globalState;
+
+	console.log("token value = ",TokenManager.getToken());
 
 	const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
 	item.text = "$(add) Add Todo";
@@ -25,6 +27,15 @@ export  function activate(context: vscode.ExtensionContext) {
 			// The code you place here will be executed every time your command is executed
 			// Display a message box to the user
 			HelloWorldPanel.createOrShow(context.extensionUri);
+		})
+	);
+	context.subscriptions.push(
+		vscode.commands.registerCommand('todovs.authenticate', () => {
+			try {
+				authenticate();
+			} catch (error) {
+				console.log(error);
+			}
 		})
 	);
 
