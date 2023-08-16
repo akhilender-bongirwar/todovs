@@ -4,17 +4,17 @@
     let todos: Array<{text:String; completed: boolean}> = [];
     let text = "";
     onMount(()=>{
-        window.addEventListener('message', event => {
+        window.addEventListener("message", (event) => {
         const message = event.data; 
         console.log({message});
 
         switch (message.type) {
-            case 'new-todo':
+            case "new-todo":
                 todos = [
                 {text: message.value, completed: false}, 
                 ...todos,
             ];
-                break;
+            break;
         }
     });
     })

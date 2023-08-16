@@ -13,10 +13,13 @@ export  function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "todovs" is now active!');
 
+	const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
+	item.text = "$(add) Add Todo";
+	item.command = "todovs.addToDo";
+	item.show();
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-
 	context.subscriptions.push(
 		vscode.commands.registerCommand('todovs.helloWorld', () => {
 			// The code you place here will be executed every time your command is executed
@@ -24,8 +27,9 @@ export  function activate(context: vscode.ExtensionContext) {
 			HelloWorldPanel.createOrShow(context.extensionUri);
 		})
 	);
+
 	context.subscriptions.push(
-		vscode.commands.registerCommand("todovs.addTodo", () => {
+		vscode.commands.registerCommand("todovs.addToDo", () => {
 		  const { activeTextEditor } = vscode.window;
 	
 		  if (!activeTextEditor) {
@@ -33,10 +37,11 @@ export  function activate(context: vscode.ExtensionContext) {
 			return;
 		  }
 	
-		  const text = activeTextEditor.document.getText(
+		  const text = activeTextEditor.document.getText( 
 			activeTextEditor.selection
-		  );
-	
+		  ); 
+		  
+		//   vscode.window.showInformationMessage(text);
 		  sidebarProvider._view?.webview.postMessage({
 			type: "new-todo",
 			value: text,
