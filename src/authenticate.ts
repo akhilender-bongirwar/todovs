@@ -4,7 +4,7 @@ import * as polka from 'polka';
 import { TokenManager } from './TokenManager';
 
 
-export const authenticate = () =>{
+export const authenticate = (fn: ()=> void) =>{
     const app = polka();
     
     app.get(`/auth/:token`,async (req,res) => {
@@ -14,11 +14,12 @@ export const authenticate = () =>{
             return;
         }
         await TokenManager.setToken(token);
+        fn();
         res.end(`<h1>auth was succesful, you can close this now</h1>`);
         (app as any).server.close();
     });
     
-    app.listen(9003, (err:Error) =>{
+    app.listen(54321, (err:Error) =>{
         if(err){
             vscode.window.showErrorMessage(err.message);
         }else{

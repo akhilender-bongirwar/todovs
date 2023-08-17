@@ -1,57 +1,63 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+    import { onMount } from "svelte";
+    import type {User} from '../types'
+    import Todos from "./Todos.svelte";
 
-    let todos: Array<{text:String; completed: boolean}> = [];
-    let text = "";
-    onMount(()=>{
-        window.addEventListener("message", (event) => {
-        const message = event.data; 
-        console.log({message});
+    let accessToken = "";
+    let loading = true;
+    let user: User | null = null;
+    let page: "todos" | "contact" = tsvscode.getState()?.page || "todos";
 
-        switch (message.type) {
-            case "new-todo":
-                todos = [
-                {text: message.value, completed: false}, 
-                ...todos,
-            ];
-            break;
-        }
-    });
-    })
-</script>
-<style>
-    .complete{
-        text-decoration: line-through;
+    $: {
+        tsvscode.setState({ page });
     }
-</style>
-<form
-    on:submit|preventDefault = {()=>{
-        todos = [{text, completed:false}, ...todos];
-        text = '';
-    }}>
-    <input bind:value={text} />
-</form>
-<ul>
-    {#each todos as todo (todo.text)}
-        <li 
-        class={todo.completed ? 'complete':''}
-        on:click={()=>{
-            todo.completed = !todo.completed;
-        }}>{todo.text}</li>
-    {/each}
-</ul>
 
-<button on:click={()=>{
-    tsvscode.postMessage({
-        type:'onInfo',
-        value:'info message'
-    })
-}}> Click Me
-</button>
-<button on:click={()=>{
-    tsvscode.postMessage({
-        type:'onError',
-        value:'error message'
-    })
-}}> Click Me for error
-</button>
+    onMount(async () => {
+        window.addEventListener("message", async (event) => {
+            const message = event.data;
+            switch (message.type) {
+                case "token":
+                    accessToken = message.value;
+                    const response = await fetch(`${apiBaseUrl}/me`, {
+                        headers: {
+                            authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+                    const data = await response.json(); 
+                    user = data.user;
+                    loading = false;
+            }
+        });
+
+        tsvscode.postMessage({ type: "get-token", value: undefined });
+    });
+</script>
+
+{#if loading}
+    <div>loading...</div>
+{:else if user}
+    {#if page === 'todos'}
+        <Todos {user} {accessToken} />
+        <button
+            on:click={() => {
+                page = 'contact';
+            }}>go to contact</button>
+    {:else}
+        <div>Contact me here: akhilender</div>
+        <button
+            on:click={() => {
+                page = 'todos';
+            }}>go back</button>
+    {/if}
+    <button
+        on:click={() => {
+            accessToken = '';
+            user = null;
+            tsvscode.postMessage({ type: 'logout', value: undefined });
+        }}>logout</button>
+{:else}
+    <button
+        on:click={() => {
+            tsvscode.postMessage({ type: 'authenticate', value: undefined });
+        }}>login with GitHub</button>
+{/if}

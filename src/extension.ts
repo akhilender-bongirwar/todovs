@@ -7,8 +7,6 @@ import { text } from 'stream/consumers';
 import { authenticate } from './authenticate';
 import { TokenManager } from './TokenManager';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export  function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "todovs" is now active!');
 	TokenManager.globalState = context.globalState;
@@ -19,16 +17,14 @@ export  function activate(context: vscode.ExtensionContext) {
 	item.text = "$(add) Add Todo";
 	item.command = "todovs.addToDo";
 	item.show();
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
 	context.subscriptions.push(
 		vscode.commands.registerCommand('todovs.helloWorld', () => {
-			// The code you place here will be executed every time your command is executed
-			// Display a message box to the user
-			HelloWorldPanel.createOrShow(context.extensionUri);
+			// HelloWorldPanel.createOrShow(context.extensionUri);
+			vscode.window.showInformationMessage(
+				"token is :"+ TokenManager.getToken()
+			);
 		})
-	);
+	),
 	context.subscriptions.push(
 		vscode.commands.registerCommand('todovs.authenticate', () => {
 			try {
