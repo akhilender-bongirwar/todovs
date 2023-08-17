@@ -1,53 +1,20 @@
-import { RequestHandler, Request, Response, NextFunction } from "express";
-import { verify } from "jsonwebtoken";
-import createError from "http-errors";
-import { User } from "../entities/User";
-import { createTokens, RefreshTokenData, AccessTokenData } from "./createTokens";
+import { RequestHandler, Request} from "express";
+import jwt from "jsonwebtoken";
 
-export const isAuth: (st?: boolean) => RequestHandler<{}, any, any, {}> = (
-  shouldThrow = true
-) => async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const accessToken = req.headers["access-token"];
-  if (typeof accessToken !== "string") {
-    return next(
-      shouldThrow && createError(401, "not authenticated")
-    );
-  }
-
-  try {
-    const data = <AccessTokenData>verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-    req.userId = data.userId;
-    return next();
-  } catch {}
-
-  const refreshToken = req.headers["refresh-token"];
-  if (typeof refreshToken !== "string") {
-    return next(
-      shouldThrow && createError(401, "not authenticated")
-    );
-  }
-
-  let data;
-  try {
-    data = <RefreshTokenData>verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-  } catch {
-    return next(
-      shouldThrow && createError(401, "not authenticated")
-    );
-  }
-
-  const user = await User.findOne(data.userId);
-  if (!user || user.tokenVersion !== data.tokenVersion) {
-    return next(
-      shouldThrow && createError(401, "not authenticated")
-    );
-  }
-
-  const tokens = createTokens(user);
-
-  res.setHeader("refresh-token", tokens.refreshToken);
-  res.setHeader("access-token", tokens.accessToken);
-  req.userId = data.userId;
-
-  next();
+export const isAuth: RequestHandler<{}, any, any, {}> = async (req,_, next) =>{
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        throw new Error("not authenticated!!");
+    }
+    const token = authHeader.split(" ")[1];
+    if (!token) {
+        throw new Error("not authenticated!!");
+    }
+    try {
+        const payload: any = jwt.verify(token, process.env.JWT_SECRET);
+        req.userId = payload.userId;
+        next();
+        return;
+    } catch {}
+    throw new Error("not authenticated!!");
 };

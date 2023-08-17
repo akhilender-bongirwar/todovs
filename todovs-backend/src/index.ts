@@ -62,7 +62,7 @@ const main = async () => {
             res.redirect(`http://localhost:54321/auth/${req.user.accessToken}`);
         });
 
-        app.get("/todo", isAuth, async (req, res) => {
+        app.get("/todo", isAuth, async (req:any, res:any) => {
             const todos = await Todo.find({
               where: { creatorId: req.userId },
               order: { id: "DESC" },
@@ -71,7 +71,7 @@ const main = async () => {
             res.send({ todos });
           });
         
-          app.post("/todo", isAuth, async (req, res) => {
+          app.post("/todo", isAuth, async (req:any, res:any) => {
             const todo = await Todo.create({
               content: req.body.content,
               creatorId: req.userId,
@@ -79,7 +79,7 @@ const main = async () => {
             res.send({ todo });
           });
         
-          app.put("/todo", isAuth, async (req, res) => {
+          app.put("/todo", isAuth, async (req:any, res:any) => {
             const todo = await Todo.findOne(req.body.id);
             if (!todo) {
               res.send({ todo: null });
