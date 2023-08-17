@@ -5,13 +5,13 @@
     export let user: User;
     export let accessToken: string;
     let text = "";
-    let todos: Array<{ text: string; completed: boolean; id: number }> = [];
+    let todos: Array<{ content: string; completed: boolean; id: number }> = [];
 
     async function addTodo(t: string) {
         const response = await fetch(`${apiBaseUrl}/todo`, {
             method: "POST",
             body: JSON.stringify({
-                text: t,
+                content: t,
             }),
             headers: {
                 "content-type": "application/json",
@@ -76,7 +76,7 @@
                 });
                 console.log(await response.json());
             }}>
-            {todo.text}
+            {todo.content}
         </li>
     {/each}
 </ul>

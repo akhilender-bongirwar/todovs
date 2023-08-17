@@ -1,5 +1,7 @@
-import { RequestHandler, Request} from "express";
+import { Request, RequestHandler} from "express";
 import jwt from "jsonwebtoken";
+
+export type ReqWithUserId = Request<{},any,any,{}> & {userId: number};
 
 export const isAuth: RequestHandler<{}, any, any, {}> = async (req,_, next) =>{
     const authHeader = req.headers.authorization;

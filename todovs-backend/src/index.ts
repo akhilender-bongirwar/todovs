@@ -3,7 +3,7 @@ import express from "express";
 require("dotenv-safe").config();
 import { createConnection } from "typeorm";
 import { __prod__ } from "./constants";
-import { join } from 'path'
+import { join } from 'path';
 import { User } from "./entities/User";
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from "passport-github";
@@ -48,8 +48,8 @@ const main = async () => {
     passport.serializeUser((user: any, done) => {
         done(null, user.accessToken);
     });
-    app.use(cors({origin: '*'}));
-    
+    app.use(cors({ origin: '*' }));
+
     app.use(passport.initialize());
 
     app.use(express.json());
@@ -62,36 +62,36 @@ const main = async () => {
             res.redirect(`http://localhost:54321/auth/${req.user.accessToken}`);
         });
 
-        app.get("/todo", isAuth, async (req:any, res:any) => {
-            const todos = await Todo.find({
-              where: { creatorId: req.userId },
-              order: { id: "DESC" },
-            });
-        
-            res.send({ todos });
-          });
-        
-          app.post("/todo", isAuth, async (req:any, res:any) => {
-            const todo = await Todo.create({
-              content: req.body.content,
-              creatorId: req.userId,
-            }).save();
-            res.send({ todo });
-          });
-        
-          app.put("/todo", isAuth, async (req:any, res:any) => {
-            const todo = await Todo.findOne(req.body.id);
-            if (!todo) {
-              res.send({ todo: null });
-              return;
-            }
-            if (todo.creatorId !== req.userId) {
-              throw new Error("not authorized");
-            }
-            todo.completed = !todo.completed;
-            await todo.save();
-            res.send({ todo });
-          });
+    app.get("/todo", isAuth, async (req: any, res: any) => {
+        const todos = await Todo.find({
+            where: { creatorId: req.userId },
+            order: { id: "DESC" },
+        });
+
+        res.send({ todos });
+    });
+
+    app.post("/todo", isAuth, async (req: any, res: any) => {
+        const todo = await Todo.create({
+            content: req.body.content,
+            creatorId: req.userId,
+        }).save();
+        res.send({ todo });
+    });
+
+    app.put("/todo", isAuth, async (req: any, res: any) => {
+        const todo = await Todo.findOne(req.body.id);
+        if (!todo) {
+            res.send({ todo: null });
+            return;
+        }
+        if (todo.creatorId !== req.userId) {
+            throw new Error("not authorized");
+        }
+        todo.completed = !todo.completed;
+        await todo.save();
+        res.send({ todo });
+    });
 
 
     app.get('/me', async (req, res) => {

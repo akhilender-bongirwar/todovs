@@ -3,13 +3,16 @@
 import * as vscode from 'vscode';
 import { HelloWorldPanel } from './HelloWorldPanel';
 import { SidebarProvider } from './SidebarProvider';
-import { text } from 'stream/consumers';
 import { authenticate } from './authenticate';
 import { TokenManager } from './TokenManager';
 
 export  function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "todovs" is now active!');
 	TokenManager.globalState = context.globalState;
+
+	const authFunc = () =>{
+		console.log("authFunc is executed succesfully...");
+	}
 
 	console.log("token value = ",TokenManager.getToken());
 
@@ -28,7 +31,7 @@ export  function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('todovs.authenticate', () => {
 			try {
-				authenticate();
+				authenticate(authFunc);
 			} catch (error) {
 				console.log(error);
 			}
