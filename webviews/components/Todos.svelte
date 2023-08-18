@@ -43,6 +43,11 @@
 </script>
 
 <style>
+    .title{
+        text-align: center;
+        font-weight: bold;
+        font-size: large;
+    }
     .wholediv{
         display: flex;
         justify-content: space-between;
@@ -60,8 +65,8 @@
     }
 </style>
 
-<div>Hello👋 {user.name}</div>
-<div></div>
+<div class="title">Hello👋 {user.name}</div>
+<div>ADD NOTES📝:</div>
 
 <form
     on:submit|preventDefault={async () => {
@@ -71,6 +76,7 @@
     <input bind:value={text} />
 </form>
 
+<div>ALL NOTES🗒️</div>
 <ul class="wholediv">
     {#each todos as todo (todo.id)}
         <li

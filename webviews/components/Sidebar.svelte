@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import type {User} from '../types'
     import Todos from "./Todos.svelte";
+  import Contact from "./Contact.svelte";
 
     let accessToken = "";
     let loading = true;
@@ -41,10 +42,9 @@
         <button
             on:click={() => {
                 page = 'contact';
-            }}>go to contact</button>
+            }}>How to use?🤔</button>
     {:else}
-        <div></div>
-        <div>Contact me here: lcs2022011@iiitl.ac.in</div>
+        <Contact />
         <button
             on:click={() => {
                 page = 'todos';
