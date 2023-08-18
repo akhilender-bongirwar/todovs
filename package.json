@@ -45,7 +45,7 @@
       {
         "command": "todovs.addToDo",
         "category": "TodoVS",
-        "title": "Add Todo from any selection"
+        "title": "Add code from any selection"
       },
       {
         "command": "todovs.authenticate",

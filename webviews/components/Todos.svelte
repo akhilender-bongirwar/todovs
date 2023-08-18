@@ -77,6 +77,24 @@
                 console.log(await response.json());
             }}>
             {todo.content}
+            <span class="delete-icon" on:click={async (e) => {
+                e.stopPropagation();
+                const response = await fetch(`${apiBaseUrl}/todo`,{
+                    method:'DELETE',
+                    body: JSON.stringify({
+                        id: todo.id,
+                    }),
+                    headers:{
+                        authorization:`Bearer ${accessToken}`,
+                    },
+                });
+                console.log(await response.json());
+                if (response.ok) {
+                        todos = todos.filter(t => t.id !== todo.id);
+                    }
+            }}>
+                🗑️
+            </span>
         </li>
     {/each}
 </ul>

@@ -62,7 +62,7 @@ const main = async () => {
             res.redirect(`http://localhost:54321/auth/${req.user.accessToken}`);
         });
 
-    app.get("/todo", isAuth, async (req: any, res: any) => {
+    app.get("/todo", isAuth, async (req, res) => {
         const todos = await Todo.find({
             where: { creatorId: req.userId },
             order: { id: "DESC" },
@@ -71,7 +71,7 @@ const main = async () => {
         res.send({ todos });
     });
 
-    app.post("/todo", isAuth, async (req: any, res: any) => {
+    app.post("/todo", isAuth, async (req, res) => {
         const todo = await Todo.create({
             content: req.body.content,
             creatorId: req.userId,
@@ -79,20 +79,34 @@ const main = async () => {
         res.send({ todo });
     });
 
-    app.put("/todo", isAuth, async (req: any, res: any) => {
+    app.put("/todo", isAuth, async (req, res) => {
         const todo = await Todo.findOne(req.body.id);
         if (!todo) {
-            res.send({ todo: null });
+            res.send({ success: false, message: "Todo not found" });
             return;
         }
         if (todo.creatorId !== req.userId) {
-            throw new Error("not authorized");
+            res.status(403).send({ success: false, message: "Not authorized" });
+            return;
         }
         todo.completed = !todo.completed;
         await todo.save();
         res.send({ todo });
     });
 
+    app.delete("/todo",isAuth,async(req,res)=>{
+        const todo = await Todo.findOne(req.body.id);
+        if (!todo) {
+            res.send({ success: false, message: "Todo not found" });
+            return;
+        }
+        if (todo.creatorId !== req.userId) {
+            res.status(403).send({ success: false, message: "Not authorized" });
+            return;
+        }
+        await todo.remove();
+        res.send({ success: true, message: "Todo deleted successfully" });
+    });
 
     app.get('/me', async (req, res) => {
         const authHeader = req.headers.authorization;
