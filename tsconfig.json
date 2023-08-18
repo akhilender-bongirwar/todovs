@@ -15,6 +15,6 @@
 		"node_modules",
 		".vscode-test",
 		 "webviews",
-		 "todovs-backend"
+		 "vsnote-backend"
 	]
 }

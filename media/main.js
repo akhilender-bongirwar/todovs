@@ -4,6 +4,4 @@
 (function () {
     const vscode = acquireVsCodeApi();
     console.log("app loaded fine!!");
-
-    
 }());

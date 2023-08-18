@@ -1,7 +1,7 @@
 {
-  "name": "todovs",
-  "displayName": "todovs",
-  "description": "enables you to keep track of all your tasks",
+  "name": "vsnote",
+  "displayName": "vsnote",
+  "description": "Enables you to keep track of all your notes",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.81.0"
@@ -15,41 +15,41 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "todovs-sidebar-view",
-          "title": "todoVS",
-          "icon": "media/checklist.svg"
+          "id": "vsnote-sidebar-view",
+          "title": "VSNote",
+          "icon": "media/notebook.svg"
         }
       ]
     },
     "views": {
-      "todovs-sidebar-view": [
+      "vsnote-sidebar-view": [
         {
           "type": "webview",
-          "id": "todovs-sidebar",
-          "name": "todoVS",
-          "icon": "media/checklist.svg",
-          "contextualTitle": "VSinder"
+          "id": "vsnote-sidebar",
+          "name": "VSNote",
+          "icon": "media/notebook.svg",
+          "contextualTitle": "VSNotes"
         }
       ]
     },
     "commands": [
       {
-        "command": "todovs.helloWorld",
+        "command": "vsnote.helloWorld",
         "title": "Hello World"
       },
       {
-        "command": "todovs.refresh",
-        "category": "TodoVS",
+        "command": "vsnote.refresh",
+        "category": "VSNote",
         "title": "Refresh"
       },
       {
-        "command": "todovs.addToDo",
-        "category": "TodoVS",
+        "command": "vsnote.addToDo",
+        "category": "VSNote",
         "title": "Add code from any selection"
       },
       {
-        "command": "todovs.authenticate",
-        "category": "TodoVS",
+        "command": "vsnote.authenticate",
+        "category": "VSNote",
         "title": "Authenticate "
       }
     ]
@@ -66,6 +66,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
+    "@iconify/svelte": "^3.1.4",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-typescript": "^11.1.2",

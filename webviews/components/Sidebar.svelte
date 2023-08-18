@@ -43,6 +43,7 @@
                 page = 'contact';
             }}>go to contact</button>
     {:else}
+        <div></div>
         <div>Contact me here: lcs2022011@iiitl.ac.in</div>
         <button
             on:click={() => {

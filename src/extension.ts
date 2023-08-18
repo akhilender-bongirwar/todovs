@@ -7,21 +7,21 @@ import { authenticate } from './authenticate';
 import { TokenManager } from './TokenManager';
 
 export  function activate(context: vscode.ExtensionContext) {
-	console.log('Congratulations, your extension "todovs" is now active!');
+	console.log('Congratulations, your extension "vsnote" is now active!');
 	TokenManager.globalState = context.globalState;
 
 	const authFunc = () =>{
 		console.log("authFunc is executed succesfully...");
-	}
+	};
 
 	console.log("token value = ",TokenManager.getToken());
 
 	const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
-	item.text = "$(add) Add Todo";
-	item.command = "todovs.addToDo";
+	item.text = "$(note) Add Note";
+	item.command = "vsnote.addToDo";
 	item.show();
 	context.subscriptions.push(
-		vscode.commands.registerCommand('todovs.helloWorld', () => {
+		vscode.commands.registerCommand('vsnote.helloWorld', () => {
 			// HelloWorldPanel.createOrShow(context.extensionUri);
 			vscode.window.showInformationMessage(
 				"token is :"+ TokenManager.getToken()
@@ -29,7 +29,7 @@ export  function activate(context: vscode.ExtensionContext) {
 		})
 	),
 	context.subscriptions.push(
-		vscode.commands.registerCommand('todovs.authenticate', () => {
+		vscode.commands.registerCommand('vsnote.authenticate', () => {
 			try {
 				authenticate(authFunc);
 			} catch (error) {
@@ -39,7 +39,7 @@ export  function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand("todovs.addToDo", () => {
+		vscode.commands.registerCommand("vsnote.addToDo", () => {
 		  const { activeTextEditor } = vscode.window;
 	
 		  if (!activeTextEditor) {
@@ -62,19 +62,19 @@ export  function activate(context: vscode.ExtensionContext) {
 	const sidebarProvider = new SidebarProvider(context.extensionUri);
     context.subscriptions.push(
         vscode.window.registerWebviewViewProvider(
-       "todovs-sidebar",
+       "vsnote-sidebar",
        sidebarProvider
     )
   );
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('todovs.refresh', async () => {
+		vscode.commands.registerCommand('vsnote.refresh', async () => {
 			// The code you place here will be executed every time your command is executed
 			// Display a message box to the user
 			// HelloWorldPanel.kill();
 			// HelloWorldPanel.createOrShow(context.extensionUri);
 			await vscode.commands.executeCommand("workbench.action.closeSidebar");
-			await vscode.commands.executeCommand("workbench.view.extension.todovs-sidebar-view");
+			await vscode.commands.executeCommand("workbench.view.extension.vsnote-sidebar-view");
 			setTimeout(()=>{
 				vscode.commands.executeCommand(
 					"workbench.action.webview.openDeveloperTools"
