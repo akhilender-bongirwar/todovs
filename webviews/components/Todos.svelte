@@ -78,7 +78,7 @@
     <input bind:value={text} />
 </form>
 
-<div>ALL NOTES🗒️</div>
+<div>ALL NOTES🗒️:</div>
 <ul class="wholediv">
     {#each todos as todo (todo.id)}
         <li
