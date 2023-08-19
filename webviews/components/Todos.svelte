@@ -20,6 +20,7 @@
         });
         const { todo } = await response.json();
         todos = [todo, ...todos];
+        
     }
 
     onMount(async () => {
@@ -31,6 +32,7 @@
                     break;
             }
         });
+        
 
         const response = await fetch(`${apiBaseUrl}/todo`, {
             headers: {

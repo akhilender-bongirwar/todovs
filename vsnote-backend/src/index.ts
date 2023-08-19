@@ -36,7 +36,6 @@ passport.use(new GitHubStrategy({
 const main = async () => {
     await createConnection({
         type: 'postgres',
-        
         username: 'postgres',
         password: 'Akhil099',
         entities: [join(__dirname, "./entities/*.*")],
