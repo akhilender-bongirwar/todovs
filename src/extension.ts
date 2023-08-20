@@ -5,6 +5,7 @@ import { SidebarProvider } from './SidebarProvider';
 import { authenticate } from './authenticate';
 import { TokenManager } from './TokenManager';
 
+
 export  function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "vsnote" is now active!');
 	TokenManager.globalState = context.globalState;

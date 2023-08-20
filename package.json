@@ -2,6 +2,7 @@
   "name": "vsnote",
   "displayName": "vsnote",
   "description": "Enables you to keep track of all your notes",
+  "publisher": "Akhilender Bongirwar",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.81.0"

@@ -1,16 +1,12 @@
-# vsnote README
+# VS NOTE README
 
-This is the README for your extension "vsnote". After writing up a brief description, we recommend including the following sections.
+This is an excellent Visual Studio Code extension designed to assist you in organizing code snippets, reminders, or any other information you wish to retain for future reference. It's particularly beneficial for developers who spend the majority of their time within the VS Code environment.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
 
-For example if there is an image subfolder under your extension project workspace:
 
-\!\[feature X\]\(images/feature-x.png\)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 
