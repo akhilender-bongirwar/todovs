@@ -22,13 +22,19 @@
         todos = [todo, ...todos];
         
     }
+    
 
     onMount(async () => {
         window.addEventListener("message", async (event) => {
             const message = event.data;
             switch (message.type) {
                 case "new-todo":
-                    addTodo(message.value);
+                    try {
+                       addTodo(message.value);
+                       tsvscode.postMessage({type: 'onInfo', value:message.value})
+                    } catch (error) {
+                        tsvscode.postMessage({type: "onError",  value:message.value})
+                    }
                     break;
             }
         });
@@ -42,6 +48,8 @@
         const payload = await response.json();
         todos = payload.todos;
     });
+
+
 </script>
 
 <style>

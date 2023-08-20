@@ -12,8 +12,6 @@
     $: {
         tsvscode.setState({ page });
     }
-
-    // removed the code here
     onMount(async () => {
         window.addEventListener("message", async (event) => {
             const message = event.data;

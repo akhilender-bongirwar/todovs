@@ -47,14 +47,14 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
             if (!data.value) {
               return;
             }
-            vscode.window.showInformationMessage(data.value);
+            vscode.window.showInformationMessage("Succesfully added note:" +data.value);
             break;
           }
           case "onError": {
             if (!data.value) {
               return;
             }
-            vscode.window.showErrorMessage(data.value);
+            vscode.window.showErrorMessage("Failed to add the note");
             break;
           }
         }

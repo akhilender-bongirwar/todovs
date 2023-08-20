@@ -1,7 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { HelloWorldPanel } from './HelloWorldPanel';
 import { SidebarProvider } from './SidebarProvider';
 import { authenticate } from './authenticate';
 import { TokenManager } from './TokenManager';
@@ -20,9 +19,9 @@ export  function activate(context: vscode.ExtensionContext) {
 	item.text = "$(note) Add Note";
 	item.command = "vsnote.addToDo";
 	item.show();
+
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vsnote.helloWorld', () => {
-			// HelloWorldPanel.createOrShow(context.extensionUri);
 			vscode.window.showInformationMessage(
 				"token is :"+ TokenManager.getToken()
 			);
@@ -35,6 +34,18 @@ export  function activate(context: vscode.ExtensionContext) {
 			} catch (error) {
 				console.log(error);
 			}
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('vsnote.success', () => {
+			vscode.window.showInformationMessage("Added Note Sucessfully");
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('vsnote.fail', () => {
+			vscode.window.showErrorMessage("Adding Note Failed!!!");
 		})
 	);
 
@@ -71,8 +82,6 @@ export  function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand('vsnote.refresh', async () => {
 			// The code you place here will be executed every time your command is executed
 			// Display a message box to the user
-			// HelloWorldPanel.kill();
-			// HelloWorldPanel.createOrShow(context.extensionUri);
 			await vscode.commands.executeCommand("workbench.action.closeSidebar");
 			await vscode.commands.executeCommand("workbench.view.extension.vsnote-sidebar-view");
 			setTimeout(()=>{

@@ -51,6 +51,16 @@
         "command": "vsnote.authenticate",
         "category": "VSNote",
         "title": "Authenticate "
+      },
+      {
+        "command": "vsnote.success",
+        "category": "VSNote",
+        "title": "SuccessMsg "
+      },
+      {
+        "command": "vsnote.fail",
+        "category": "VSNote",
+        "title": "FailedMsg "
       }
     ]
   },
