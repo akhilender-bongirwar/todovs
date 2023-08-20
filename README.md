@@ -39,10 +39,5 @@ Add / Delete / Mark as completed task
 Can select the code and press the add note option in the status bar to add it.
 
 
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Visual Studio Code Extension Docs]([http://code.visualstudio.com/docs/languages/markdown](https://code.visualstudio.com/api/get-started/your-first-extension))
-* [Visual Studio Code's Extension Examples]([http://code.visualstudio.com/docs/languages/markdown](https://github.com/microsoft/vscode-extension-samples)https://github.com/microsoft/vscode-extension-samples)
 
 **Enjoy! the extension. Do Fork, star the repo and you can contribute to the repository**
