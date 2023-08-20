@@ -45,4 +45,4 @@ Can select the code and press the add note option in the status bar to add it.
 * [Visual Studio Code Extension Docs]([http://code.visualstudio.com/docs/languages/markdown](https://code.visualstudio.com/api/get-started/your-first-extension))
 * [Visual Studio Code's Extension Examples]([http://code.visualstudio.com/docs/languages/markdown](https://github.com/microsoft/vscode-extension-samples)https://github.com/microsoft/vscode-extension-samples)
 
-**Enjoy! the extension. Do Fork, star the repo and you can contribute to the reposiotory**
+**Enjoy! the extension. Do Fork, star the repo and you can contribute to the repository**
